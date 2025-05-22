@@ -1,5 +1,6 @@
 #include<iostream>
 #include<string>
+#include<sstream>
 
 using namespace std;
 
@@ -18,7 +19,10 @@ class Item{
     ItemStructure *item;
     Item():item(nullptr){};
 
-    void displayAllitems(){
+    void displayAllitems(bool sorted = true){
+        if (sorted) {
+            sortByItemId();  // Sort before displaying
+        }
         ItemStructure *temp = item;
         while (temp != NULL)
         {
@@ -90,6 +94,7 @@ class Item{
 // Traverses through all nodes in the linked list
 // Properly deallocates each node's memory
 // Prevents memory leaks
+
 };
 
 int stringToInt(const string& str){
@@ -106,51 +111,61 @@ int stringToInt(const string& str){
 }
 
 
-int main(int argc,char* argv[]){
-
-        if (argc < 2) {
-        cout << "Please provide a command" << endl;
-        cout << "Use 'help' for available commands" << endl;
-        return 1;
-    }
-
+int main(int argc, char* argv[]) {
+    cout << "Hello THERE !" << endl;
+    cout << "Type 'help' for available commands or 'exit' to quit" << endl;
 
     Item inventory;
-    string command = argv[1];
+    string command;
 
-    while (command != "exit")
-    {
-        if(command == "itemadd"){
-            if (argc != 6)
-            {
-                cout<< "Number of arguments excedded !!!"<<endl;
-                cout << "here are the correct options :"<<endl;
-                cout<<"itemadd <item_id> <item_name> <quantity> <Registration_date>"<<endl;
-                 return 1;
-            }
-            int item_id = stringToInt(argv[2]);
-            string item_name = argv[3];
-            int item_quantity = stringToInt(argv[4]);
-            string reg_date = argv[5];
+    while (true) {
+        cout << "\nEnter command: ";
+        getline(cin, command);
 
-            inventory.addNewItemAtLast(item_id,item_name,item_quantity,reg_date);
-            cout<<"new Item added successfully !" <<endl;
-        }else if (command == "itemslist"){
-            if(argc != 2){
-                cout<< "Number of arguments exceeded !"<<endl;
-            }
-                inventory.displayAllitems();
-            
-        }else if(command == "help"){
-            cout<<"---------------------------------------"<<endl
-            <<"*        Commands syntaxes           *"<<endl
-            <<"----------------------------------------"<<endl;
-            cout<<"itemadd <item_id> <item_name> <quantity> <Registration_date>"<<endl;
-            cout<<"itemslist"<<endl;
+        if (command == "exit") {
+            cout << "Thank you for using our system!" << endl;
+            break;
         }
-        cout << "\nEnter command (or 'exit' to quit): ";
-        cin >> command;
+        else if (command == "help") {
+            cout << "---------------------------------------" << endl
+                 << "*        Commands syntaxes           *" << endl
+                 << "----------------------------------------" << endl;
+            cout << "itemadd <item_id> <item_name> <quantity> <Registration_date>" << endl;
+            cout << "itemslist" << endl;
+            cout << "exit" << endl;
+        }
+        else if (command.substr(0, 7) == "itemadd") {
+            // Parse the command string for arguments
+            stringstream ss(command);
+            string cmd, id_str, name, quantity_str, date;
+            ss >> cmd >> id_str >> name >> quantity_str >> date;
+
+            if (cmd.empty() || id_str.empty() || name.empty() || quantity_str.empty() || date.empty()) {
+                cout << "Invalid arguments!" << endl;
+                cout << "Correct syntax: itemadd <item_id> <item_name> <quantity> <Registration_date>" << endl;
+                continue;
+            }
+
+            try {
+                int item_id = stringToInt(id_str);
+                int quantity = stringToInt(quantity_str);
+                inventory.addNewItemAtLast(item_id, name, quantity, date);
+                cout << "New Item added successfully!" << endl;
+            }
+            catch (...) {
+                cout << "Invalid number format!" << endl;
+            }
+        }
+        else if (command == "itemslist") {
+            inventory.displayAllitems();
+        }
+        else {
+            cout << "Unknown command. Type 'help' for available commands." << endl;
+        }
     }
-    
-    return 0;
 }
+
+
+
+
+
