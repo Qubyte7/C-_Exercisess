@@ -10,6 +10,7 @@ class Student{
     Student(string studentName,int studentAge,string studentClassName):name(studentName),age(studentAge),className(studentClassName), next(NULL){};
 };
 
+
 void mapThroughTheList(Student *Head){
     while (Head != NULL)
     {
