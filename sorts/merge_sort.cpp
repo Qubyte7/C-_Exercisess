@@ -1,11 +1,13 @@
 #include<iostream>
+#include<vector>
+
 using namespace std;
 
 void merge_sorted_array(int a[],int l,int m,int r){
     int left_index_length = m-l+1;
     int right_index_length = r-m;
-    int temp_left[left_index_length];
-    int temp_right[right_index_length];
+    vector<int> temp_left(left_index_length);
+    vector<int> temp_right(right_index_length);
     int i,j,k;
     for(i=0;i<left_index_length;i++){
         temp_left[i] = a[l+i];

@@ -50,6 +50,10 @@
         "xlocmon": "cpp",
         "xloctime": "cpp",
         "vector": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "deque": "cpp",
+        "queue": "cpp",
+        "sstream": "cpp",
+        "xtree": "cpp"
     }
 }
