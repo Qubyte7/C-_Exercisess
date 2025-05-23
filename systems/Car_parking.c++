@@ -42,6 +42,12 @@ bool parkExists(const string& code) {
         [&](const Park& p) { return p.parking_code == code; });
 }
 
+// Lambda function [&](const Park& p): Anonymous function to check each park
+// [&]: Captures all variables by reference
+// (const Park& p): Takes each park object as parameter
+// return p.parking_code == code: Compares parking codes
+
+
 // File Operations
 void loadParks() {
     parks.clear();
@@ -176,27 +182,97 @@ void showParkingNetwork() {
     cout << "\nParking network saved to 'parking_network.csv'\n";
 }
 
+void removeEdge() {
+    string from, to;
+    cout << "Enter first parking code: ";
+    cin >> from;
+    cout << "Enter second parking code: ";
+    cin >> to;
+    
+    if (!parkExists(from) || !parkExists(to)) {
+        cout << "Error: One or both parking codes not found.\n";
+        return;
+    }
+
+    // Remove edge in both directions (undirected graph)
+    auto& fromDistances = graph[from];
+    auto& toDistances = graph[to];
+    
+    // Remove 'to' from 'from's distances
+    fromDistances.erase(
+        remove_if(fromDistances.begin(), fromDistances.end(),
+            [&](const Distance& d) { return d.target == to; }),
+        fromDistances.end()
+    );
+    
+    // Remove 'from' from 'to's distances
+    toDistances.erase(
+        remove_if(toDistances.begin(), toDistances.end(),
+            [&](const Distance& d) { return d.target == from; }),
+        toDistances.end()
+    );
+    
+    saveGraph();
+    cout << "Connection between " << from << " and " << to << " removed.\n";
+}
+
+void removePark() {
+    string code;
+    cout << "Enter parking code to remove: ";
+    cin >> code;
+    
+    if (!parkExists(code)) {
+        cout << "Error: Parking code not found.\n";
+        return;
+    }
+    
+    // Remove park from parks vector
+    parks.erase(
+        remove_if(parks.begin(), parks.end(),
+            [&](const Park& p) { return p.parking_code == code; }),
+        parks.end()
+    );
+    
+    // Remove all edges connected to this park
+    graph.erase(code);
+    for (auto& [_, distances] : graph) {
+        distances.erase(
+            remove_if(distances.begin(), distances.end(),
+                [&](const Distance& d) { return d.target == code; }),
+            distances.end()
+        );
+    }
+    
+    saveParks();
+    saveGraph();
+    cout << "Parking " << code << " and all its connections removed.\n";
+}
+
 int main() {
     loadParks();
     loadGraph();
     
     int choice;
     do {
-        cout << "\n--- Parking Network Management ---\n";
-        cout << "1. Add Parking\n";
-        cout << "2. Add Distance Between Parks\n";
-        cout << "3. Show Parking Network\n";
-        cout << "0. Exit\n";
-        cout << "Enter choice: ";
-        cin >> choice;
-        
-        switch (choice) {
-            case 1: addPark(); break;
-            case 2: addDistance(); break;
-            case 3: showParkingNetwork(); break;
-            case 0: cout << "Exiting...\n"; break;
-            default: cout << "Invalid choice.\n";
-        }
+// In main(), update the menu:
+cout << "\n--- Parking Network Management ---\n";
+cout << "1. Add Parking\n";
+cout << "2. Add Distance Between Parks\n";
+cout << "3. Show Parking Network\n";
+cout << "4. Remove Connection Between Parks\n";
+cout << "5. Remove Parking\n";
+cout << "0. Exit\n";
+
+// Update switch statement:
+switch (choice) {
+    case 1: addPark(); break;
+    case 2: addDistance(); break;
+    case 3: showParkingNetwork(); break;
+    case 4: removeEdge(); break;
+    case 5: removePark(); break;
+    case 0: cout << "Exiting...\n"; break;
+    default: cout << "Invalid choice.\n";
+}
     } while (choice != 0);
     
     return 0;
