@@ -1,0 +1,5 @@
+1: Huye
+2: Nyanza
+3: Gisagara
+4: Kamonyi
+5: Rubavu

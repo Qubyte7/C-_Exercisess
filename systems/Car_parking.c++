@@ -21,7 +21,7 @@ struct Park {
     string description() const {
         return "Name: " + name + ", Location: " + location + 
                ", Available Spaces: " + to_string(available_space);
-    }
+    }   
 };
 
 struct Distance {
@@ -63,7 +63,7 @@ void loadParks() {
         getline(ss, spaces, ',');
         getline(ss, p.location);
         p.available_space = stoi(spaces);
-        parks.push_back(p);
+        parks.push_back(p);     
     }
 }
 
@@ -197,6 +197,20 @@ void removeEdge() {
     // Remove edge in both directions (undirected graph)
     auto& fromDistances = graph[from];
     auto& toDistances = graph[to];
+
+        bool connectionExists = false;
+    for (const auto& dist : fromDistances) {
+        if (dist.target == to) {
+            connectionExists = true;
+            break;
+        }
+    }
+
+    if (!connectionExists) {
+        cout << "Error: No connection exists between " << from << " and " << to << ".\n";
+        return;
+    }
+
     
     // Remove 'to' from 'from's distances
     fromDistances.erase(

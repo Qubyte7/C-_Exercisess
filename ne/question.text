@@ -1,0 +1,108 @@
+a road budget management system which will be as follows :
+
+the program should look like this :
+1.add New city(ies)
+2.Add roads between ities
+3. Add the budget for roads
+4. Edit city
+5.Search for a city using its index
+6.Display cities
+7.Display roads
+8.Display recorded dta on console
+9. exit
+
+
+1)recording cities ,
+a user should first of all write the number of cities he is going to record (Enter the number if cities to add : ) 
+after specifying the number of cities he is going to start adding there names (Enter name for city <index> : )the index will be from one up the number of specified cities . 
+after he added there names the cities are saved in cities.txt with 2 columns (index and city_name) the way now the cities should be saved is that they will continue to the index according index in the cities.tx for example if a user inputed 3 cities and in cities.txt we had 
+1: Huye
+2: Muhanga
+3: Kigali
+4: rubavu
+the other 3 cities will be as add accordingly to the index to mean they will start at index 5 in our case example
+so the updateed cities.txt will be like this 
+
+1: Huye
+2: Muhanga
+3: Kigali
+4: rubavu
+5: user_city1
+6: user_city2
+7: user_city3
+
+
+
+2) add roads between cities (1 if there is a road btn 2 cities or 0 if there is no road between 2 cities)
+we must check first of all that the cities that are going to have a road between them exists if not we display('one of the city is not yet registered')
+(Enter the name of the first city)
+(Enter the name of the second city)
+(output road added successfully);
+
+3) add the budget for roads 
+we must first of all verify if there is a road between cities we are going to add the budget for 
+if not budget we displat(no road between to specified cities to add a budget)
+if there is a road :
+(Enter the name of the first city : )
+(Enter the name of the second city : )
+(Enter the budget for the road : )
+(if success : Budget added for the road between ${city1} and ${city2})
+
+and then after save roads in a roads.txt with 2 columns road and budget as recorded 
+road column will be like contain data like this  : city1-city2
+budget column will contain data like this : 45000   
+
+4) edit/update the city name
+(Enter the index of the city to edit :)
+if index is not there : city not found
+else
+(Ener new name for the city )
+
+
+5) search a city by index )
+if index
+(Enter the index of the city)
+else
+City not yet registered
+
+
+6) display cities :
+display all cities saved in cities.txt
+
+7) display roads
+Use graph to output recorded data using adjacenent matric to display the roads 
+ex:
+roads adjaceny Matrix
+
+0101100
+1010001
+0101001
+1010110
+1001000
+0001000
+0110000
+
+8) display recorded data on console :
+display roads
+ Use graph to output recorded data using 2 adjacent matrices one for roads and another for the budget recorded:
+
+roads adjaceny Matrix
+
+0 1 0 1 1 0 0
+1 0 1 0 0 0 1
+0 1 0 1 0 0 1
+1 0 1 0 1 1 0
+1 0 0 1 0 0 0
+0 0 0 1 0 0 0
+0 1 1 0 0 0 0
+
+Budgets adjaceny Matrix
+0.0 25.2 0.0 30.1 30.2 0.0 0.0
+25.2 0.0 15.5 0.0 0.0 0.0 30.1
+0.0 1 0.0 16.4 0.0 0.0 30.1
+12.2 0 25.2 0 30.1 30.1 0.0
+13.4 0.0 0.0 25.2 0.0 0.0 0.0
+0.0 0.0 0.0 1 0.0 0.0 0.0
+0.0 30.1 25.2 0.0 0.0 0.0 0.0
+
+9) exit (option 9 to exit the program .)
